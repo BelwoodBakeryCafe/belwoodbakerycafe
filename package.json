@@ -1,0 +1,19 @@
+{
+  "name": "belwoodbakerycafe",
+  "version": "1.0.0",
+  "description": "Website for Belwood Bakery Cafe",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bbtran/belwoodbakerycafe.git"
+  },
+  "author": "Benjamin Tran and Jonathan Tran",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bbtran/belwoodbakerycafe/issues"
+  },
+  "homepage": "https://github.com/bbtran/belwoodbakerycafe#readme"
+}
