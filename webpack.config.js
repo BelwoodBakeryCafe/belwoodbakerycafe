@@ -5,14 +5,20 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const PATHS = {
   app: path.resolve(__dirname, './client'),
   dist: path.resolve(__dirname, './dist'),
-  style: [path.resolve(__dirname, './client/styles')]
-}
+  style: [path.resolve(__dirname, './client/styles')],
+  vendor: path.resolve(__dirname, './vendor.jsx')
+};
+
+const VENDOR_LIBS = ['lodash', 'react', 'react-dom', 'react-redux', 'react-router', 'react-router-bootstrap', 'react-router-redux', 'redux', 'redux-form', 'redux-thunk'];
 
 module.exports = {
-  entry: PATHS.app + '/app.jsx', 
+  entry: { 
+    app: PATHS.app + '/app.jsx',
+    vendor: VENDOR_LIBS
+  },
   output: {
     path: PATHS.dist,
-    filename: 'bundle.js',
+    filename: '[name].bundle.js',
   },
   module: {
     rules: [
