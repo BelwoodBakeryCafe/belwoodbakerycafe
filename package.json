@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node index.js",
     "clean": "rimraf dist",
-    "build": "npm run clean && webpack",
+    "build": "NODE_ENV=production npm run clean && webpack",
+    "dev": "webpack-dev-server",
     "test": "mocha"
   },
   "engines": {

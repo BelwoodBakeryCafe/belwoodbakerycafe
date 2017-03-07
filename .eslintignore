@@ -1,5 +1,5 @@
 node_modules/*
 npm-debug.log
-build/*
+dist/*
 webpack.config.js
 libs/parts.js
