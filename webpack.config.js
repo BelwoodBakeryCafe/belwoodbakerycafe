@@ -18,7 +18,7 @@ module.exports = {
   },
   output: {
     path: PATHS.dist,
-    filename: '[name].bundle.js',
+    filename: '[name].[chunkhash].js',
   },
   module: {
     rules: [
@@ -37,6 +37,12 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: 'BelwoodBakeryCafe',
       template: PATHS.app + '/index.html'
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
+      names: ['vendor', 'manifest']
+    }), 
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
     })
   ],
   externals: {
