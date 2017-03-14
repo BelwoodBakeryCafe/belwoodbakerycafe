@@ -8,15 +8,13 @@ const loadModule = (cb) => (componentModule) => {
 
 export default function createRoutes(store) {
     // create reusable async injectors using getAsyncInjectors factory
-    return [
-        //   {
-        //     path: '/',
-        //     name: 'App',
-        //     getComponent(location, cb) {
-        //         System.import('./containers/App')
-        //             .then(loadModule(cb))
-        //             .catch(errorLoading);
-        //     },
-        // }
-    ];
+    return [{
+        path: '/',
+        name: 'Home',
+        getComponent(location, cb) {
+            System.import('./containers/Home')
+                .then(loadModule(cb))
+                .catch(errorLoading);
+        },
+    }];
 }
