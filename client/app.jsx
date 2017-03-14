@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { Router, browserHistory, applyRouterMiddleware } from 'react-router';
+import { Router, browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
-
+import Home from './containers/Home';
 // Load the favicon, the manifest.json file and the .htaccess file
 /* eslint-disable import/no-webpack-loader-syntax */
 // import '!file-loader?name=[name].[ext]!./favicon.ico';
@@ -11,31 +11,42 @@ import { syncHistoryWithStore } from 'react-router-redux';
 // import 'file-loader?name=[name].[ext]!./.htaccess'; // eslint-disable-line import/extensions
 /* eslint-enable import/no-webpack-loader-syntax */
 
-import App from './containers/App';
-
 import configureStore from './store';
 // Import routes
-import createRoutes from './routes';
+import createRoutes from './router';
 
 const initialState = {};
-const store = configureStore(initialState, browserHistory);
-
-const history = syncHistoryWithStore(browserHistory, store, {
-  selectLocationState: makeSelectLocationState(),
-});
-const rootRoute = {
-  path: '/',
-  component: App,
-  indexRoute: { component: App },
-  childRoutes: createRoutes(store),
+const createSelectLocationState = () => {
+  let prevRoutingState, prevRoutingStateJS;
+  return (state) => {
+    const routingState = state.get('routing'); // or state.routing 
+    if (typeof prevRoutingState === 'undefined' || prevRoutingState !== routingState) {
+      prevRoutingState = routingState;
+      prevRoutingStateJS = routingState.toJS();
+    }
+    return prevRoutingStateJS;
+  };
 };
 
-ReactDOM.render(
+const App = () => {
+  const store = configureStore(initialState, browserHistory);
+
+  const history = syncHistoryWithStore(browserHistory, store, {
+  selectLocationState: createSelectLocationState() });
+
+  const rootRoute = {
+    component: Home,
+    path: '/',
+    childRoutes: createRoutes(store),
+  };
+  return (
   <Provider store={store}>
     <Router
       history={history}
       routes={rootRoute}
     />
-  </Provider>,
-document.getElementById('mainApp'),
-);
+  </Provider>
+  );
+};
+
+ReactDOM.render(<App />, document.getElementById('main'));
