@@ -13,24 +13,35 @@ const VENDOR_LIBS = ['lodash', 'react', 'react-dom', 'react-redux', 'react-route
 
 module.exports = {
     entry: {
-        app: PATHS.app + '/app.jsx',
-        vendor: VENDOR_LIBS
+        app: [PATHS.app + '/app.jsx', 'webpack/hot/only-dev-server'],
+        vendor: VENDOR_LIBS,
+        client: ['webpack-hot-middleware/client?reload=true']
     },
     output: {
         path: PATHS.dist,
-        filename: '[name].[chunkhash].js',
+        filename: '[name].[hash].js',
+        publicPath: '/'
+    },
+    devServer: {
+        contentBase: PATHS.app, // New
+        hot: true,
+        publicPath: '/'
     },
     module: {
         rules: [{
-                use: 'babel-loader',
                 test: /\.jsx?$/,
+                use: ['react-hot-loader', 'babel-loader'],
                 include: PATHS.app,
                 exclude: /node_modules/
             },
             {
-                use: ['style-loader', 'css-loader'],
-                test: /\.css$/
+                test: /\.css$/,
+                use: ['style-loader', 'css-loader']
             },
+            {
+                test: /\.(jpg|png|gif)$/,
+                use: 'file-loader'
+            }
         ],
     },
     plugins: [
@@ -43,7 +54,11 @@ module.exports = {
         }),
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
-        })
+        }),
+        new webpack.HotModuleReplacementPlugin(),
+        // enable HMR globally
+        new webpack.NamedModulesPlugin()
+        // prints more readable module names in the browser console on HMR updates
     ],
     resolve: {
         //Empty string needed. 
@@ -53,5 +68,6 @@ module.exports = {
         'react/addons': true,
         'react/lib/ExecutionEnvironment': true,
         'react/lib/ReactContext': true
-    }
+    },
+    devtool: 'source-map'
 };
