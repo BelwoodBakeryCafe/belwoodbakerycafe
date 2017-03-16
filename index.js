@@ -14,10 +14,16 @@ if (process.env.NODE_ENV === 'production') {
         res.sendFile(path.join(__dirname, 'dist/index.html'));
     });
 } else {
-    const webpackMiddleware = require('webpack-dev-middleware');
+    const webpackDevMiddleware = require('webpack-dev-middleware');
+    const webpackHotMiddleware = require('webpack-hot-middleware');
     const webpack = require('webpack');
     const webpackConfig = require('./webpack.config.js');
-    app.use(webpackMiddleware(webpack(webpackConfig)));
+    app.use(webpackDevMiddleware(webpack(webpackConfig), {
+        noInfo: true,
+        silent: true,
+        stats: 'errors-only',
+    }));
+    app.use(webpackHotMiddleware(webpack(webpackConfig)));
 }
 
 app.listen(port, () => {
