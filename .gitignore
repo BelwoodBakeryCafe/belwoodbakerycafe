@@ -1,10 +1,12 @@
 node_modules/*
 npm-debug.log
-dist/*
 .eslintcache
-.vscode
+.gitattributes
+.github
 coverage
 build/*
+dist/*
 stats.json
+.vscode/*
 .DS_Store
 .idea
