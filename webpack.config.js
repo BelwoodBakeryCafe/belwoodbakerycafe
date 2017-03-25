@@ -9,7 +9,7 @@ const PATHS = {
     vendor: path.resolve(__dirname, './vendor.jsx')
 };
 
-const VENDOR_LIBS = ['lodash', 'react', 'react-dom', 'react-redux', 'react-router', 'react-router-bootstrap', 'react-router-redux', 'redux', 'redux-form', 'redux-thunk'];
+const VENDOR_LIBS = ['lodash', 'react', 'react-dom', 'react-router', 'react-router-bootstrap'];
 
 module.exports = {
     entry: {
@@ -46,7 +46,7 @@ module.exports = {
         })
     ],
     resolve: {
-        //Empty string needed. 
+        //Empty string needed.
         extensions: ['.js', '.jsx']
     },
     externals: {
