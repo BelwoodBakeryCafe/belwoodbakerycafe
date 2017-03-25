@@ -76,7 +76,7 @@ function dependencyHandlers() {
     if (!dllPlugin) {
         return [
             new webpack.optimize.CommonsChunkPlugin({
-                name: 'vendor',
+                name: ['vendor', 'manifest'],
                 children: true,
                 minChunks: 2,
                 async: true,
