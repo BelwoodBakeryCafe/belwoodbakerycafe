@@ -8,16 +8,11 @@ const PATHS = {
   style: [path.resolve(__dirname, './styles')],
 };
 
-const VENDOR_LIBS = ['react-hot-loader/patch', 'lodash', 'react', 'react-dom', 'redux', 'react-router', 'react-redux', 'react-router-redux'];
+const VENDOR_LIBS = ['react-hot-loader/patch', 'lodash', 'react', 'react-dom', 'redux', 'react-router', 'react-router-bootstrap', 'react-redux', 'react-router-redux'];
 
 module.exports = {
   entry: {
-    app: [
-      'react-hot-loader/patch',
-      'webpack-dev-server/client?http://localhost:8080/',
-      'webpack/hot/only-dev-server',
-      PATHS.app,
-    ],
+    app: [PATHS.app],
     vendor: VENDOR_LIBS,
   },
   output: {
@@ -40,13 +35,15 @@ module.exports = {
     ],
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
       title: 'BelwoodBakeryCafe',
       template: PATHS.app + '/index.html',
     }),
     new webpack.optimize.CommonsChunkPlugin({
       names: ['vendor', 'manifest'],
+    }),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
     }),
   ],
   resolve: {
@@ -56,10 +53,5 @@ module.exports = {
     'react/addons': true,
     'react/lib/ExecutionEnvironment': true,
     'react/lib/ReactContext': true,
-  },
-  devServer: {
-    historyApiFallback: true,
-    contentBase: './dist',
-    hot: true,
   },
 };
