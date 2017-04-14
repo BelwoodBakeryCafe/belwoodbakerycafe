@@ -1,7 +1,0 @@
-node_modules/*
-npm-debug.log
-build/*
-dist/*
-libs/parts.js
-_webpack.config.js
-_index.js
